@@ -244,65 +244,63 @@ def fetchDataFromNSE(_symbol_list,_lastndays=21):
  
     return final_result_set
 
-
-
-def send_email(report_filename):    
-    
-    #The mail addresses and password
-    sender_address = '<your-gmail-with-secure-feature-off>@gmail.com'
-    sender_password = ''
-    receiver_address = '<receivers email>@gmail.com'
-    
-    fileDir = os.path.dirname(os.path.realpath('__file__'))
-    with open(os.path.join(fileDir, "secrets/password.txt"), "r") as f:
-        sender_password = f.read()
-          
- 
-    #Setup the MIME
-    message = MIMEMultipart()
-    message['From'] = sender_address
-    message['To'] = receiver_address
-    message['Subject'] = 'Stock Delivery and Trading Alert'   #The subject line
-    
-    mail_content = 'Daily Stock Delivery and Trading Alert' 
-    
-    #The body and the attachments for the mail
-    message.attach(MIMEText(mail_content, 'plain'))
-    
-    attachment = open(report_filename, "rb")
-    
-    # instance of MIMEBase and named as p
-    #p = MIMEBase('application', 'octet-stream')
-    p = MIMEBase('text', 'plain')
- 
- 
-    # To change the payload into encoded form
-    p.set_payload(attachment.read())
-      
-    # encode into base64
-    encoders.encode_base64(p)
-       
-    p.add_header('Content-Disposition', "attachment; filename=StockDeliveryTrading.csv" )
-      
-    # attach the instance 'p' to instance 'msg'
-    message.attach(p)
-        
-
-    #Create SMTP session for sending the mail
-    session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
-    
-    session.starttls() #enable security
-    
-    session.login(sender_address, sender_password) #login with mail_id and password
-    
-    text = message.as_string()
-    
-    session.sendmail(sender_address, receiver_address, text)
-    
-    session.quit()
- 
-    
-    print('Mail Sent')
+# def send_email(report_filename):
+#
+#     #The mail addresses and password
+#     sender_address = 'day.trader.ichimoku@gmail.com'
+#     sender_password = ''
+#     receiver_address = 'day.trader.ichimoku@gmail.com'
+#
+#     fileDir = os.path.dirname(os.path.realpath('__file__'))
+#     with open(os.path.join(fileDir, "secrets/password.txt"), "r") as f:
+#         sender_password = f.read()
+#
+#
+#     #Setup the MIME
+#     message = MIMEMultipart()
+#     message['From'] = sender_address
+#     message['To'] = receiver_address
+#     message['Subject'] = 'Stock Delivery and Trading Alert'   #The subject line
+#
+#     mail_content = 'Daily Stock Delivery and Trading Alert'
+#
+#     #The body and the attachments for the mail
+#     message.attach(MIMEText(mail_content, 'plain'))
+#
+#     attachment = open(report_filename, "rb")
+#
+#     # instance of MIMEBase and named as p
+#     #p = MIMEBase('application', 'octet-stream')
+#     p = MIMEBase('text', 'plain')
+#
+#
+#     # To change the payload into encoded form
+#     p.set_payload(attachment.read())
+#
+#     # encode into base64
+#     encoders.encode_base64(p)
+#
+#     p.add_header('Content-Disposition', "attachment; filename=StockDeliveryTrading.csv" )
+#
+#     # attach the instance 'p' to instance 'msg'
+#     message.attach(p)
+#
+#
+#     #Create SMTP session for sending the mail
+#     session = smtplib.SMTP('smtp.gmail.com', 587) #use gmail with port
+#
+#     session.starttls() #enable security
+#
+#     session.login(sender_address, sender_password) #login with mail_id and password
+#
+#     text = message.as_string()
+#
+#     session.sendmail(sender_address, receiver_address, text)
+#
+#     session.quit()
+#
+#
+#     print('Mail Sent')
 
 
 
@@ -327,7 +325,7 @@ def mainFunction():
     print("\n-------------FINAL REPORT---------------\n")
     print(final_report)
     
-    send_email(os.path.join(fileDir, report_filename))
+    # send_email(os.path.join(fileDir, report_filename))
     
 # Call main 
 mainFunction()
